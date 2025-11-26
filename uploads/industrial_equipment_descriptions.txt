@@ -1,0 +1,60 @@
+
+1. Electric Motor
+Brand/Model	Description
+Siemens SIMOTICS GP	Offers high power density and energy efficiency for general industrial applications. Its sturdy frame, compact design, and low maintenance requirements provide reliable operation in pumps, compressors, and conveyor systems.
+ABB M2BAX Series	Premium-efficiency (IE3) motors ensuring quiet operation. Designed for tough conditions, with enhanced lifetime and reduced energy consumption for continuous or demanding industrial processes.
+Crompton Greaves IE3 Motors	Delivers consistent performance, high starting torque, and excellent durability. Ideal for demanding industries; engineered for energy efficiency and long service life.
+
+2. Air Compressor
+Brand/Model	Description
+Atlas Copco GA Series	Provides reliable screw compressor performance, high air quality, and advanced Variable Speed Drive options for energy savings. Suited for all major industries.
+Ingersoll Rand R-Series	Renowned for efficiency and reliability; rotary screw compressors with intelligent controls, durable components, and high air delivery for manufacturing and process plants.
+ELGi EN Series	Compact, low-noise, energy-efficient. User-friendly digital controller ensures efficient air delivery for automotive, textile, and general industrial uses.
+
+3. Welding Machine
+Brand/Model	Description
+Lincoln Electric Power MIG 210 MP	Multi-process welder supporting MIG, TIG, and Stick welding. Setup is easy, with digital controls and portability for versatile fabrication.
+ESAB Rebel EMP 215ic	Adapts to user skill with Smart MIG technology. Handles MIG, Flux-Cored, Stick, and TIG. Portable and intuitive.
+Panasonic YD-400AT3	Heavy-duty performance, digital precision, and a reliable arc for industrial manufacturing.
+
+4. Conveyor Belt
+Brand/Model	Description
+Dunlop Ultra X	Designed for mining and heavy industry, offering outstanding abrasion resistance and durability for bulk handling.
+Fenner Dunlop Apex	Engineered for high speed, tough impact, and flexibility in mining and logistics environments.
+Intralox Series 900	Modular plastic design for food processing; provides quick sanitation, easy maintenance, and hygienic handling.
+
+5. Vacuum Pump
+Brand/Model	Description
+Busch R5 RA Series	Rotary vane pump delivering high performance and reliability in packaging, plastics, and food industries.
+Edwards nXDS	Dry scroll pumps, offering oil-free, low-maintenance, and quiet operation for laboratory and industrial systems.
+Leybold SOGEVAC SV	Consistent vacuum for industrial/research applications; rugged build, simple integration, and quiet operation.
+
+6. PLC Controller
+Brand/Model	Description
+Siemens SIMATIC S7-1200	Modular, expandable automation solution with fast communications, precision, and scalability for modern process control.
+Mitsubishi FX5U	High-speed processing, flexible I/O, advanced connectivity; compact package for smart factories and automation.
+Allen-Bradley MicroLogix 1400	Ethernet/IP connectivity, flexible expansion, and reliable automation for small to mid-size machinery.
+
+7. Industrial Power Supply
+Brand/Model	Description
+Schneider Electric ABL8 Series	Modular switch-mode power supplies with consistent voltage output, overload protection, and compatibility for control panels.
+Siemens SITOP PSU8600	Modular, efficient multi-channel outputs, integrated diagnostics—ready for Industry 4.0 manufacturing.
+Mean Well HDR Series	DIN rail-mountable, slim design, energy-efficient, and reliable for distributed electrical panels.
+
+8. Temperature Sensor
+Brand/Model	Description
+Honeywell RTD Sensors	Accurate, stable temperature measurement; fast response and easy integration for industrial/commercial environments.
+Omega Thermocouple Probes	Wide-range measurement, durable, and digital system-compatible; ensures precise process monitoring.
+Siemens SITRANS TS100	Robust design, easy installation, reliable temperature detection for automation applications.
+
+9. Inverter Drive (VFD)
+Brand/Model	Description
+ABB ACS880	Optimizes energy use, robust motor control, user-friendly configuration for all industrial drive applications.
+Siemens SINAMICS V20	Simple, cost-effective pump/fan/conveyor drive solutions; easy setup and energy savings.
+Danfoss VLT® AutomationDrive	Modular VFD supports high torque, advanced automation integration, and long-term reliability.
+
+10. Ball Bearing
+Brand/Model	Description
+SKF Explorer	High precision, long service life, and reduced friction for demanding machinery.
+NSK Deep Groove Ball Bearings	Quiet operation, outstanding durability, versatile for various industrial uses.
+FAG (Schaeffler) Single Row Ball Bearings	Low noise, high load capacity, robust operation in fans, motors, and automotive applications.

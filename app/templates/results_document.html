@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document Similarity Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <h2 class="text-3xl font-semibold text-center text-blue-600 mt-10 mb-6">📄 Document Similarity Results</h2>
+
+  {% if results|length == 0 %}
+    <div class="text-center text-red-600 text-xl mt-12">No similar documents found.</div>
+  {% else %}
+    <div class="flex justify-center gap-4 mb-6">
+      <button onclick="showTable('high')" class="px-5 py-2 rounded-lg font-semibold text-white bg-green-600 hover:opacity-90">High Similarity</button>
+      <button onclick="showTable('moderate')" class="px-5 py-2 rounded-lg font-semibold text-black bg-yellow-400 hover:opacity-90">Moderate</button>
+      <button onclick="showTable('low')" class="px-5 py-2 rounded-lg font-semibold text-white bg-red-600 hover:opacity-90">Low</button>
+    </div>
+
+    <!-- High Similarity -->
+    <div id="highTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">High Similarity Matches (Score &gt; 0.90)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-green-100">
+          <tr>
+            <th class="p-3 border">Matched Document</th>
+            <th class="p-3 border">Similarity Score</th>
+            <th class="p-3 border">Snippet</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            {% if r.score > 0.90 %}
+              <tr class="bg-green-50">
+                <td class="p-3 border">{{ r.filename }}</td>
+                <td class="p-3 border">{{ "%.4f"|format(r.score) }}</td>
+                <td class="p-3 border text-left whitespace-pre-wrap">{{ r.snippet }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Moderate Similarity -->
+    <div id="moderateTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">Moderate Similarity Matches (0.75 - 0.90)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-yellow-100">
+          <tr>
+            <th class="p-3 border">Matched Document</th>
+            <th class="p-3 border">Similarity Score</th>
+            <th class="p-3 border">Snippet</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            {% if 0.75 <= r.score <= 0.90 %}
+              <tr class="bg-yellow-50">
+                <td class="p-3 border">{{ r.filename }}</td>
+                <td class="p-3 border">{{ "%.4f"|format(r.score) }}</td>
+                <td class="p-3 border text-left whitespace-pre-wrap">{{ r.snippet }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Low Similarity -->
+    <div id="lowTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">Low Similarity Matches (Score &lt; 0.75)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-red-100">
+          <tr>
+            <th class="p-3 border">Matched Document</th>
+            <th class="p-3 border">Similarity Score</th>
+            <th class="p-3 border">Snippet</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            {% if r.score < 0.75 %}
+              <tr class="bg-red-50">
+                <td class="p-3 border">{{ r.filename }}</td>
+                <td class="p-3 border">{{ "%.4f"|format(r.score) }}</td>
+                <td class="p-3 border text-left whitespace-pre-wrap">{{ r.snippet }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  <script>
+    function showTable(type) {
+      ['highTable', 'moderateTable', 'lowTable'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(type + 'Table').classList.remove('hidden');
+    }
+
+    window.onload = function () {
+      if (document.querySelector('#highTable tr')) {
+        showTable('high');
+      } else if (document.querySelector('#moderateTable tr')) {
+        showTable('moderate');
+      } else if (document.querySelector('#lowTable tr')) {
+        showTable('low');
+      }
+    };
+  </script>
+</body>
+</html>

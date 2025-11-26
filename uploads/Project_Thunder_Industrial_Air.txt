@@ -1,0 +1,51 @@
+### Project Thunder: Industrial Air Compressor
+
+**Product Description:**
+The Thunder 5000 is a heavy-duty, oil-lubricated air compressor designed for continuous industrial applications. Its robust cast-iron pump and high-efficiency motor deliver a consistent air flow and pressure, making it ideal for powering pneumatic tools, spray guns, and machinery in workshops and manufacturing plants. The unit features a large, ASME-certified tank for extended operation and a built-in pressure regulator for precise control.
+
+**Technical Specifications:**
+* **Horsepower:** 5.0 HP
+* **Tank Capacity:** 80 Gallons (ASME Certified)
+* **Air Delivery:** 18 CFM @ 90 PSI
+* **Max Pressure:** 175 PSI
+* **Pump Type:** Two-stage, cast-iron, oil-lubricated
+* **Power Source:** 230V, single-phase
+
+**Confidentiality Notice:**
+This document contains proprietary and confidential information. Unauthorized distribution, reproduction, or disclosure is strictly prohibited. All rights reserved.
+
+---
+
+### Project Forge: Desktop 3D Printer
+
+**Product Description:**
+The Forge S-1 is a high-precision, fused deposition modeling (FDM) 3D printer engineered for professional prototyping and intricate design work. Its advanced heated bed and all-metal hotend ensure excellent adhesion and compatibility with a wide range of materials, including PLA, ABS, and PETG. The printer features a large build volume, quiet operation, and an intuitive touchscreen interface, providing a seamless user experience.
+
+**Technical Specifications:**
+* **Technology:** Fused Deposition Modeling (FDM)
+* **Build Volume:** 300 x 300 x 400 mm
+* **Layer Resolution:** 0.05 - 0.4 mm
+* **Filament Diameter:** 1.75 mm
+* **Nozzle Temperature:** Up to 300°C
+* **Connectivity:** USB, Wi-Fi, Ethernet
+
+**Confidentiality Notice:**
+This document contains proprietary and confidential information. Unauthorized distribution, reproduction, or disclosure is strictly prohibited. All rights reserved.
+
+---
+
+### Project Breeze: Commercial Air Washer
+
+**Product Description:**
+The Breeze X-1000 is a commercial-grade air washer designed to simultaneously humidify and purify large indoor spaces. It uses a unique water-based filtration system to trap dust, pollen, and other airborne particles, while also providing a cool, moist air stream. The unit is constructed with durable, corrosion-resistant materials and features a low-maintenance design with an easy-to-clean water tank and filter pads.
+
+**Technical Specifications:**
+* **Coverage Area:** Up to 1000 sq. ft.
+* **Water Tank Capacity:** 15 Liters
+* **Airflow Rate:** 500 CFM
+* **Filtration:** Water-based, no-consumable filter pads
+* **Noise Level:** <45 dB (Quiet Operation)
+* **Features:** Automatic humidity control, remote operation
+
+**Confidentiality Notice:**
+This document contains proprietary and confidential information. Unauthorized distribution, reproduction, or disclosure is strictly prohibited. All rights reserved.

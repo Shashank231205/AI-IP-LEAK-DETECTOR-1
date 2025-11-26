@@ -1,0 +1,222 @@
+Industrial Drill Machine
+CNC Milling Machine
+Air Compressor
+Hydraulic Jack
+Electric Motor
+Welding Machine
+Vacuum Pump
+Conveyor Belt
+Heat Exchanger
+Ball Bearing
+Gearbox
+Inverter Drive
+Power Transformer
+PLC Controller
+Stepper Motor
+Servo Motor
+Pneumatic Cylinder
+Hydraulic Pump
+Solenoid Valve
+Rotary Encoder
+Proximity Sensor
+Load Cell
+Pressure Transmitter
+Flow Meter
+Temperature Sensor
+Level Sensor
+Industrial PC
+HMI Display
+SCADA System
+Industrial Robot
+Stepper Driver
+VFD Drive
+Industrial Power Supply
+Limit Switch
+Contactor Relay
+Circuit Breaker
+Industrial Plug
+Push Button
+Emergency Stop Switch
+SMPS
+DIN Rail
+Cable Gland
+Terminal Block
+Busbar
+Panel Meter
+Torque Wrench
+Measuring Caliper
+Industrial Fan
+Cooling Tower
+Industrial Heater
+Fume Extractor
+Dust Collector
+Air Filter Regulator
+Oil Skimmer
+Industrial Chiller
+Control Panel
+Distribution Board
+Industrial UPS
+Battery Charger
+Solar Inverter
+Industrial Light
+LED Flood Light
+Induction Lamp
+High Bay Light
+Panel Light
+Wiring Duct
+Cable Tray
+Junction Box
+Flexible Conduit
+Cable Tie
+Wire Marker
+Cable Lug
+Ferrule Printing Machine
+Label Printer
+Bar Code Scanner
+RFID Reader
+Magnetic Sensor
+Industrial Camera
+Vision Sensor
+Thermal Imager
+Ultrasonic Sensor
+Laser Distance Sensor
+Smoke Detector
+Gas Leak Detector
+Fire Alarm System
+Access Control System
+Biometric Attendance
+Door Interlock System
+PA System
+Intercom System
+Temperature Controller
+Humidity Controller
+Data Logger
+Signal Converter
+Relay Module
+IO Module
+Modbus Gateway
+Wireless Transmitter
+Industrial Router
+Ethernet Switch
+Fiber Optic Converter
+PoE Switch
+Surge Protector
+Network Cabinet
+Rack Mount Tray
+Cooling Fan
+Air Curtain
+Industrial Vacuum Cleaner
+Heavy Duty Trolley
+Scissor Lift Table
+Drum Lifter
+Pallet Truck
+Stacker
+Hydraulic Crane
+Goods Lift
+Roller Conveyor
+Chain Conveyor
+Slat Conveyor
+Belt Conveyor
+Screw Conveyor
+Bucket Elevator
+Z Bucket Elevator
+Inclined Conveyor
+Sorting Conveyor
+Flexible Conveyor
+Industrial Burner
+Boiler
+Steam Generator
+Thermic Fluid Heater
+Heat Pump
+Cooling Coil
+Evaporator Coil
+Condenser Coil
+AHU Unit
+Air Washer
+Dehumidifier
+Humidifier
+Industrial Oven
+Furnace
+Brazing Machine
+Spot Welding Machine
+Arc Welding Machine
+TIG Welding Machine
+MIG Welding Machine
+Laser Welding Machine
+CNC Lathe Machine
+CNC Router
+CNC Plasma Cutter
+Laser Cutting Machine
+Waterjet Cutting Machine
+Surface Grinder
+Tool Grinder
+Bench Grinder
+Drilling Cum Tapping Machine
+Radial Drill Machine
+Column Drill Machine
+Multi Spindle Drill Machine
+Slotting Machine
+Shaping Machine
+Horizontal Boring Machine
+Vertical Milling Machine
+Horizontal Milling Machine
+Universal Milling Machine
+Gear Hobbing Machine
+Gear Shaping Machine
+Broaching Machine
+Press Machine
+Hydraulic Press
+Pneumatic Press
+Mechanical Press
+Power Press
+C Type Press
+H Type Press
+Press Brake
+Shearing Machine
+Plate Rolling Machine
+Pipe Bending Machine
+Busbar Bending Machine
+Notching Machine
+Punching Machine
+Deburring Machine
+Chamfering Machine
+Beveling Machine
+Pipe Cutting Machine
+Tube End Forming Machine
+Wire Cutting Machine
+EDM Machine
+Wire EDM
+Sinker EDM
+3D Printer
+Injection Molding Machine
+Blow Molding Machine
+Extrusion Machine
+Granulator Machine
+Crushing Machine
+Vibratory Feeder
+Screw Feeder
+Belt Feeder
+Weighing Scale
+Checkweigher
+Metal Detector
+X-ray Inspection System
+Labeling Machine
+Packing Machine
+Filling Machine
+Capping Machine
+Sealing Machine
+Vacuum Packing Machine
+Shrink Wrapping Machine
+Strapping Machine
+Batch Coding Machine
+Inkjet Printer
+Thermal Transfer Printer
+Carton Sealer
+Case Erector
+Palletizer
+Depalletizer
+Stretch Wrapping Machine
+Industrial Water Pump
+Vibration Sensor
+Power Factor Controller
+Inductive Coupler

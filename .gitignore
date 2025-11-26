@@ -1,0 +1,36 @@
+# Virtual Environments
+.venv/
+.venv*/
+venv/
+env/
+env*/
+*/venv/
+*/env/
+
+# Python
+__pycache__/
+*.pyc
+
+# EXCLUDE ALL IMAGES
+static/images/
+src/images/
+
+# EXCLUDE ALL DATASETS
+data/
+*.csv
+
+# EXCLUDE NOTEBOOKS
+notebooks/
+
+# EXCLUDE MODELS
+models/
+*.pt
+*.pth
+*.onnx
+
+# Flask uploads
+app/uploads/
+
+# IDE
+.vscode/
+.idea/

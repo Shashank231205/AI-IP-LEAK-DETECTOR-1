@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Similarity Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <h2 class="text-3xl font-semibold text-center text-blue-600 mt-10 mb-6">🔍 Image Similarity Results</h2>
+
+  {% if similarity_result|length == 0 %}
+    <div class="text-center text-red-600 text-xl mt-12">No similar images found.</div>
+  {% else %}
+    <div class="flex justify-center gap-4 mb-6">
+      <button onclick="showTable('high')" class="px-5 py-2 rounded-lg font-semibold text-white bg-green-600 hover:opacity-90">High Similarity</button>
+      <button onclick="showTable('moderate')" class="px-5 py-2 rounded-lg font-semibold text-black bg-yellow-400 hover:opacity-90">Moderate</button>
+      <button onclick="showTable('low')" class="px-5 py-2 rounded-lg font-semibold text-white bg-red-600 hover:opacity-90">Low</button>
+    </div>
+
+    <!-- High -->
+    <div id="highTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">High Similarity Matches (Score &gt; 0.95)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-green-100">
+          <tr>
+            <th class="p-3 border">Input Image</th>
+            <th class="p-3 border">Matched Brand Image</th>
+            <th class="p-3 border">Cosine Similarity</th>
+            <th class="p-3 border">SSIM</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in similarity_result %}
+            {% if r["Cosine Similarity"] > 0.95 %}
+              <tr class="bg-green-50">
+                <td class="p-3 border">{{ r["Image 1"] }}</td>
+                <td class="p-3 border">
+                  <img src="/src/images/{{ r["Image 2"] }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                  <div>{{ r["Image 2"] }}</div>
+                </td>
+                <td class="p-3 border">{{ "%.4f"|format(r["Cosine Similarity"]) }}</td>
+                <td class="p-3 border">{{ r["SSIM"] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Moderate -->
+    <div id="moderateTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">Moderate Similarity Matches (0.85 - 0.95)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-yellow-100">
+          <tr>
+            <th class="p-3 border">Input Image</th>
+            <th class="p-3 border">Matched Brand Image</th>
+            <th class="p-3 border">Cosine Similarity</th>
+            <th class="p-3 border">SSIM</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in similarity_result %}
+            {% if 0.85 <= r["Cosine Similarity"] <= 0.95 %}
+              <tr class="bg-yellow-50">
+                <td class="p-3 border">{{ r["Image 1"] }}</td>
+                <td class="p-3 border">
+                  <img src="/src/images/{{ r["Image 2"] }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                  <div>{{ r["Image 2"] }}</div>
+                </td>
+                <td class="p-3 border">{{ "%.4f"|format(r["Cosine Similarity"]) }}</td>
+                <td class="p-3 border">{{ r["SSIM"] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Low -->
+    <div id="lowTable" class="hidden">
+      <h3 class="text-center text-lg font-semibold text-gray-700 mb-3">Low Similarity Matches (Score &lt; 0.85)</h3>
+      <table class="w-11/12 mx-auto bg-white shadow-md border border-gray-200">
+        <thead class="bg-red-100">
+          <tr>
+            <th class="p-3 border">Input Image</th>
+            <th class="p-3 border">Matched Brand Image</th>
+            <th class="p-3 border">Cosine Similarity</th>
+            <th class="p-3 border">SSIM</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for r in similarity_result %}
+            {% if r["Cosine Similarity"] < 0.85 %}
+              <tr class="bg-red-50">
+                <td class="p-3 border">{{ r["Image 1"] }}</td>
+                <td class="p-3 border">
+                  <img src="/src/images/{{ r["Image 2"] }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                  <div>{{ r["Image 2"] }}</div>
+                </td>
+                <td class="p-3 border">{{ "%.4f"|format(r["Cosine Similarity"]) }}</td>
+                <td class="p-3 border">{{ r["SSIM"] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
+
+  <script>
+    function showTable(type) {
+      ['highTable', 'moderateTable', 'lowTable'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      document.getElementById(type + 'Table').classList.remove('hidden');
+    }
+
+    window.onload = function () {
+      if (document.querySelector('#highTable tr.bg-green-50')) {
+        showTable('high');
+      } else if (document.querySelector('#moderateTable tr.bg-yellow-50')) {
+        showTable('moderate');
+      } else if (document.querySelector('#lowTable tr.bg-red-50')) {
+        showTable('low');
+      }
+    };
+  </script>
+</body>
+</html>

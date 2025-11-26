@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI IP Leak Detector</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'FranciaTrial';
+            src: url('C:\Users\Admin\AI_IP_Leak_Detector\static\FranciATRIAL-Regular-BF65728e8645413.otf') format('opentype');
+        }
+        body {
+            font-family: 'FranciaTrial', sans-serif;
+            background-color: #000000;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0;
+            margin: 0;
+        }
+        .logo-hover:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease-in-out;
+        }
+        .form-input, .form-select {
+            background-color: #1F1F1F;
+            border: 1px solid #3A3A3A;
+            color: #ffffff;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+        .header-bar {
+            background: linear-gradient(to right, #000000, #2F210E);
+            color: #ffffff;
+            padding: 20px 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-bottom: 50px;
+        }
+        .header-bar img {
+            width: 224px;
+            margin-bottom: 10px;
+        }
+        .header-bar p {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        .form-box {
+            background-color: rgba(161, 117, 49, 0.1);
+            border: 1px solid #BC8A4B;
+            border-radius: 20px;
+            padding: 30px;
+            transition: transform 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .form-box:hover {
+            transform: translateY(-8px);
+        }
+        .form-box h3 {
+            text-align: center;
+            color: #F5C079;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: block;
+            color: #ffffff;
+        }
+        hr {
+            border-color: rgba(188, 138, 75, 0.5);
+            margin: 20px 0;
+        }
+        button {
+            background-color: #F5C079;
+            color: #000;
+            font-weight: bold;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(245, 192, 121, 0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        button:hover:not(:disabled) {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 30px rgba(188, 138, 75, 0.7);
+        }
+        button:disabled {
+            background-color: #aaa;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .loader {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 3px solid white;
+            border-top: 3px solid #F5C079;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .note {
+            font-size: 0.85rem;
+            text-align: center;
+            color: #aaa;
+            margin-top: 15px;
+        }
+        .error {
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+    <div class="header-bar">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="arenesha logo" class="logo-hover transition-all duration-300 ease-in-out">
+        <p>AI LABS</p>
+    </div>
+    <div class="header-line"></div>
+    <div class="container">
+        <div class="form-box">
+            <h3>RESCUE++</h3>
+            <form id="combinedForm" method="POST" enctype="multipart/form-data" action="/submit_all">
+                <div class="form-group">
+                    <label for="bom_file">Upload BOM CSV (Optional)</label>
+                    <input type="file" id="bom_file" name="bom_file" accept=".csv" class="form-input w-full p-2 rounded-lg">
+                    <div id="bomFileName" class="file-name"></div>
+                    <p class="note">AI detects high-risk exports using HS Code and trade features.</p>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="image_file">Upload Product Image (Compulsory)</label>
+                    <input type="file" id="image_file" name="image_file" accept="image/*" required class="form-input w-full p-2 rounded-lg">
+                    <div id="imageFileName" class="file-name"></div>
+                </div>
+                <div class="form-group">
+                    <label for="brand_folder">Select Brand Folder (Compulsory)</label>
+                    <select id="brand_folder" name="brand_folder" required class="form-select w-full p-2 rounded-lg">
+                        <option value="" disabled selected>Select a brand</option>
+                        <option value="all">All Brands</option>
+                        {% for brand in brand_folders %}
+                            <option value="{{ brand }}">{{ brand }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="note">SSIM + histogram comparison with brand images in database.</p>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="doc_file">Upload Document (Compulsory)</label>
+                    <input type="file" id="doc_file" name="doc_file" accept=".pdf,.doc,.docx,.txt" required class="form-input w-full p-2 rounded-lg">
+                    <div id="docFileName" class="file-name"></div>
+                </div>
+                <div class="form-group">
+                    <label for="doc_folder">Select Comparison Folder (Compulsory)</label>
+                    <select id="doc_folder" name="doc_folder" required class="form-select w-full p-2 rounded-lg">
+                        <option value="" disabled selected>Select a folder</option>
+                        <option value="all">All Docs</option>
+                        {% for folder in doc_folders %}
+                            <option value="{{ folder }}">{{ folder }}</option>
+                        {% endfor %}
+                    </select>
+                    <p class="note">Semantic & fingerprint matching against sensitive document archives.</p>
+                </div>
+                <button type="submit" id="combinedSubmit">
+                    <span id="combinedButtonText">Submit for Analysis</span>
+                    <div id="combinedLoader" class="loader"></div>
+                </button>
+            </form>
+        </div>
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+    <script>
+        document.getElementById('bom_file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('bomFileName').textContent = fileName;
+        });
+        document.getElementById('image_file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('imageFileName').textContent = fileName;
+        });
+        document.getElementById('doc_file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name || 'No file selected';
+            document.getElementById('docFileName').textContent = fileName;
+        });
+        document.getElementById('combinedForm').addEventListener('submit', function () {
+            document.getElementById('combinedSubmit').disabled = true;
+            document.getElementById('combinedButtonText').style.display = 'none';
+            document.getElementById('combinedLoader').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

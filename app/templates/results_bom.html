@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOM Anomaly Results</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+</head>
+<body class="bg-zinc-900 text-white min-h-screen p-6">
+  <div class="max-w-6xl mx-auto space-y-6">
+    <h2 class="text-3xl font-bold text-yellow-400">📊 BOM Anomaly Detection Results</h2>
+
+    <!-- Tabs -->
+    <div x-data="{ tab: 'high' }">
+      <div class="flex space-x-2 border-b border-gray-700">
+        <button :class="tab === 'high' ? 'border-yellow-400 text-yellow-400' : 'text-gray-400'" @click="tab = 'high'" class="px-4 py-2 font-semibold border-b-2">🔴 High Risk ({{ results_high|length }})</button>
+        <button :class="tab === 'moderate' ? 'border-yellow-400 text-yellow-400' : 'text-gray-400'" @click="tab = 'moderate'" class="px-4 py-2 font-semibold border-b-2">🟠 Moderate Risk ({{ results_moderate|length }})</button>
+        <button :class="tab === 'low' ? 'border-yellow-400 text-yellow-400' : 'text-gray-400'" @click="tab = 'low'" class="px-4 py-2 font-semibold border-b-2">🟢 Low Risk ({{ results_low|length }})</button>
+      </div>
+
+      <!-- High Risk -->
+      <div x-show="tab === 'high'" class="pt-4" x-cloak>
+        {% if results_high %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-left border border-zinc-700">
+            <thead class="bg-red-700 text-white">
+              <tr>
+                <th class="p-2">HS Code</th>
+                <th class="p-2">Product</th>
+                <th class="p-2">Quantity</th>
+                <th class="p-2">Value (USD)</th>
+                <th class="p-2">Risk %</th>
+                <th class="p-2">Status</th>
+                <th class="p-2">Message</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-700">
+              {% for item in results_high %}
+              <tr class="hover:bg-red-900/30">
+                <td class="p-2">{{ item['HS Code'] }}</td>
+                <td class="p-2">{{ item['Product'] }}</td>
+                <td class="p-2">{{ item['Quantity'] }}</td>
+                <td class="p-2">${{ item['Value'] }}</td>
+                <td class="p-2">{{ item['Risk %'] }}</td>
+                <td class="p-2"><span class="px-2 py-1 text-xs bg-red-500 rounded">{{ item['Status'] }}</span></td>
+                <td class="p-2">{{ item['Message'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-gray-400 italic">No high risk anomalies found.</p>
+        {% endif %}
+      </div>
+
+      <!-- Moderate Risk -->
+      <div x-show="tab === 'moderate'" class="pt-4" x-cloak>
+        {% if results_moderate %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-left border border-zinc-700">
+            <thead class="bg-yellow-400 text-black">
+              <tr>
+                <th class="p-2">HS Code</th>
+                <th class="p-2">Product</th>
+                <th class="p-2">Quantity</th>
+                <th class="p-2">Value (USD)</th>
+                <th class="p-2">Risk %</th>
+                <th class="p-2">Status</th>
+                <th class="p-2">Message</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-700">
+              {% for item in results_moderate %}
+              <tr class="hover:bg-yellow-300/20">
+                <td class="p-2">{{ item['HS Code'] }}</td>
+                <td class="p-2">{{ item['Product'] }}</td>
+                <td class="p-2">{{ item['Quantity'] }}</td>
+                <td class="p-2">${{ item['Value'] }}</td>
+                <td class="p-2">{{ item['Risk %'] }}</td>
+                <td class="p-2"><span class="px-2 py-1 text-xs bg-yellow-300 text-black rounded">{{ item['Status'] }}</span></td>
+                <td class="p-2">{{ item['Message'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-gray-400 italic">No moderate risk anomalies found.</p>
+        {% endif %}
+      </div>
+
+      <!-- Low Risk -->
+      <div x-show="tab === 'low'" class="pt-4" x-cloak>
+        {% if results_low %}
+        <div class="overflow-x-auto">
+          <table class="min-w-full text-sm text-left border border-zinc-700">
+            <thead class="bg-green-600 text-white">
+              <tr>
+                <th class="p-2">HS Code</th>
+                <th class="p-2">Product</th>
+                <th class="p-2">Quantity</th>
+                <th class="p-2">Value (USD)</th>
+                <th class="p-2">Risk %</th>
+                <th class="p-2">Status</th>
+                <th class="p-2">Message</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-zinc-700">
+              {% for item in results_low %}
+              <tr class="hover:bg-green-700/30">
+                <td class="p-2">{{ item['HS Code'] }}</td>
+                <td class="p-2">{{ item['Product'] }}</td>
+                <td class="p-2">{{ item['Quantity'] }}</td>
+                <td class="p-2">${{ item['Value'] }}</td>
+                <td class="p-2">{{ item['Risk %'] }}</td>
+                <td class="p-2"><span class="px-2 py-1 text-xs bg-green-500 rounded">{{ item['Status'] }}</span></td>
+                <td class="p-2">{{ item['Message'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="text-gray-400 italic">No low risk anomalies found.</p>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <a href="{{ url_for('index') }}" class="inline-block bg-gray-700 hover:bg-gray-600 text-white font-semibold px-4 py-2 rounded">
+        🔙 Back to Upload
+      </a>
+    </div>
+  </div>
+</body>
+</html>

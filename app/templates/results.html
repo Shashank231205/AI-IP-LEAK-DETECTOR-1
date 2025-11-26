@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI IP Leak Detector - Results</title>
+  <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    @font-face {
+        font-family: 'FranciaTrial';
+        src: url('/static/fonts/FranciATRIAL-Regular-BF65728e8645413.otf') format('opentype');
+    }
+    body {
+        font-family: 'FranciaTrial', sans-serif;
+        background-color: #000000;
+        color: #ffffff;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 0;
+        margin: 0;
+    }
+    .header-bar {
+        background: linear-gradient(to right, #000000, #2F210E);
+        color: #ffffff;
+        padding: 20px 40px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-bottom: 50px;
+    }
+    .header-bar img {
+        width: 224px;
+        margin-bottom: 10px;
+    }
+    .header-bar p {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+    }
+    .container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 0 20px;
+    }
+    .result-section {
+        background-color: rgba(161, 117, 49, 0.1);
+        border: 1px solid #BC8A4B;
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .result-section h3 {
+        color: #F5C079;
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .result-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    .result-buttons .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        color: #000;
+        min-width: 120px;
+        text-align: center;
+        opacity: 0.4;
+        cursor: not-allowed;
+    }
+    .result-buttons .btn.active {
+        opacity: 1;
+        box-shadow: 0 4px 15px rgba(245, 192, 121, 0.5);
+        cursor: default;
+    }
+    .btn-high { background-color: #e74c3c; color: white; }
+    .btn-moderate { background-color: #f1c40f; }
+    .btn-low { background-color: #2ecc71; color: white; }
+    .report-button-container {
+        text-align: center;
+        margin-top: 40px;
+    }
+    .report-button {
+        background-color: #F5C079;
+        color: #000;
+        font-weight: bold;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .report-button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 6px 30px rgba(188, 138, 75, 0.7);
+    }
+    [x-cloak] { display: none !important; }
+    .tab-button-active {
+        border-bottom-width: 2px;
+        border-color: #F5C079;
+        color: #F5C079;
+    }
+  </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+    <div class="header-bar">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="arenesha logo">
+        <p>AI LABS</p>
+    </div>
+    <div class="container">
+        <h2 class="text-3xl font-bold text-[#F5C079] text-center mb-10">Analysis Results</h2>
+
+        {# ---------------- BOM RESULTS ---------------- #}
+        {% if results.bom %}
+        <div x-data="{ tab: 'high' }" class="result-section">
+            <h3 class="text-center font-bold">BOM Anomaly Detection Results</h3>
+            <div class="flex justify-center space-x-2 border-b border-gray-700 mt-6">
+                <button :class="tab === 'high' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'high'" class="px-4 py-2 font-semibold">🔴 High Risk ({{ results.bom.high|length }})</button>
+                <button :class="tab === 'moderate' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'moderate'" class="px-4 py-2 font-semibold">🟠 Moderate Risk ({{ results.bom.moderate|length }})</button>
+                <button :class="tab === 'low' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'low'" class="px-4 py-2 font-semibold">🟢 Low Risk ({{ results.bom.low|length }})</button>
+            </div>
+
+            <div x-show="tab === 'high'" class="pt-4" x-cloak>
+                {% if results.bom.high %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-red-700 text-white">
+                            <tr>
+                                <th class="p-2">Category</th>
+                                <th class="p-2">HS Code</th>
+                                <th class="p-2">Product</th>
+                                <th class="p-2">Company</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.bom.high %}
+                            <tr class="hover:bg-red-900/30">
+                                <td class="p-2">{{ item.get('Category','N/A') }}</td>
+                                <td class="p-2">{{ item.get('HS Code','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Product','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Company','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-red-400">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No high risk anomalies found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'moderate'" class="pt-4" x-cloak>
+                {% if results.bom.moderate %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-yellow-400 text-black">
+                            <tr>
+                                <th class="p-2">Category</th>
+                                <th class="p-2">HS Code</th>
+                                <th class="p-2">Product</th>
+                                <th class="p-2">Company</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.bom.moderate %}
+                            <tr class="hover:bg-yellow-300/20">
+                                <td class="p-2">{{ item.get('Category','N/A') }}</td>
+                                <td class="p-2">{{ item.get('HS Code','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Product','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Company','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-yellow-300">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No moderate risk anomalies found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'low'" class="pt-4" x-cloak>
+                {% if results.bom.low %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="p-2">Category</th>
+                                <th class="p-2">HS Code</th>
+                                <th class="p-2">Product</th>
+                                <th class="p-2">Company</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.bom.low %}
+                            <tr class="hover:bg-green-700/30">
+                                <td class="p-2">{{ item.get('Category','N/A') }}</td>
+                                <td class="p-2">{{ item.get('HS Code','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Product','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Company','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-green-300">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No low risk anomalies found.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        {# ---------------- IMAGE RESULTS ---------------- #}
+        {% if results.image %}
+        <div x-data="{ tab: 'high' }" class="result-section">
+            <h3 class="text-center font-bold">Image Similarity Results</h3>
+            <div class="flex justify-center space-x-2 border-b border-gray-700 mt-6">
+                <button :class="tab === 'high' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'high'" class="px-4 py-2 font-semibold">🔴 High Similarity ({{ results.image.high|length }})</button>
+                <button :class="tab === 'moderate' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'moderate'" class="px-4 py-2 font-semibold">🟠 Moderate Similarity ({{ results.image.moderate|length }})</button>
+                <button :class="tab === 'low' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'low'" class="px-4 py-2 font-semibold">🟢 Low Similarity ({{ results.image.low|length }})</button>
+            </div>
+
+            <div x-show="tab === 'high'" class="pt-4" x-cloak>
+                {% if results.image.high %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-red-700 text-white">
+                            <tr>
+                                <th class="p-2">Input Image</th>
+                                <th class="p-2">Matched Brand Image</th>
+                                <th class="p-2">Risk Level</th>
+                                <th class="p-2">Finding</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.image.high %}
+                            <tr class="hover:bg-red-900/30">
+                                <td class="p-2">{{ item.get('Uploaded Image','N/A') }}</td>
+                                <td class="p-2">
+                                  {% if item.get('Brand Image') and item.get('Brand Image') != 'N/A' %}
+                                    <img src="/src/images/{{ item.get('Brand Image') }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                                    <div class="text-xs break-all">{{ item.get('Brand Image') }}</div>
+                                  {% else %}
+                                    N/A
+                                  {% endif %}
+                                </td>
+                                <td class="p-2 font-semibold text-red-400">{{ item.get('Risk Level','') }}</td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No high similarity matches found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'moderate'" class="pt-4" x-cloak>
+                {% if results.image.moderate %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-yellow-400 text-black">
+                            <tr>
+                                <th class="p-2">Input Image</th>
+                                <th class="p-2">Matched Brand Image</th>
+                                <th class="p-2">Risk Level</th>
+                                <th class="p-2">Finding</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.image.moderate %}
+                            <tr class="hover:bg-yellow-300/20">
+                                <td class="p-2">{{ item.get('Uploaded Image','N/A') }}</td>
+                                <td class="p-2">
+                                  {% if item.get('Brand Image') and item.get('Brand Image') != 'N/A' %}
+                                    <img src="/src/images/{{ item.get('Brand Image') }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                                    <div class="text-xs break-all">{{ item.get('Brand Image') }}</div>
+                                  {% else %}
+                                    N/A
+                                  {% endif %}
+                                </td>
+                                <td class="p-2 font-semibold text-yellow-300">{{ item.get('Risk Level','') }}</td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No moderate similarity matches found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'low'" class="pt-4" x-cloak>
+                {% if results.image.low %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="p-2">Input Image</th>
+                                <th class="p-2">Matched Brand Image</th>
+                                <th class="p-2">Risk Level</th>
+                                <th class="p-2">Finding</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.image.low %}
+                            <tr class="hover:bg-green-700/30">
+                                <td class="p-2">{{ item.get('Uploaded Image','N/A') }}</td>
+                                <td class="p-2">
+                                  {% if item.get('Brand Image') and item.get('Brand Image') != 'N/A' %}
+                                    <img src="/src/images/{{ item.get('Brand Image') }}" alt="Matched" class="w-24 h-auto mx-auto mb-2">
+                                    <div class="text-xs break-all">{{ item.get('Brand Image') }}</div>
+                                  {% else %}
+                                    N/A
+                                  {% endif %}
+                                </td>
+                                <td class="p-2 font-semibold text-green-300">{{ item.get('Risk Level','') }}</td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No low similarity matches found.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        {# ---------------- DOCUMENT RESULTS ---------------- #}
+        {% if results.doc %}
+        <div x-data="{ tab: 'high' }" class="result-section">
+            <h3 class="text-center font-bold">Document Similarity Results</h3>
+            <div class="flex justify-center space-x-2 border-b border-gray-700 mt-6">
+                <button :class="tab === 'high' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'high'" class="px-4 py-2 font-semibold">🔴 High Similarity ({{ results.doc.high|length }})</button>
+                <button :class="tab === 'moderate' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'moderate'" class="px-4 py-2 font-semibold">🟠 Moderate Similarity ({{ results.doc.moderate|length }})</button>
+                <button :class="tab === 'low' ? 'tab-button-active text-[#F5C079]' : 'text-gray-400'" @click="tab = 'low'" class="px-4 py-2 font-semibold">🟢 Low Similarity ({{ results.doc.low|length }})</button>
+            </div>
+
+            <div x-show="tab === 'high'" class="pt-4" x-cloak>
+                {% if results.doc.high %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-red-700 text-white">
+                            <tr>
+                                <th class="p-2">Uploaded Document</th>
+                                <th class="p-2">Brand Document</th>
+                                <th class="p-2">Similarity Score</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.doc.high %}
+                            <tr class="hover:bg-red-900/30">
+                                <td class="p-2">{{ item.get('Uploaded Document','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Brand Document','N/A') }}</td>
+                                <td class="p-2">
+                                    {% if item.get('Similarity Score') != 'N/A' and item.get('Similarity Score') is not none %}
+                                        {{ "%.4f"|format(item.get('Similarity Score')) }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-red-400">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No high similarity matches found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'moderate'" class="pt-4" x-cloak>
+                {% if results.doc.moderate %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-yellow-400 text-black">
+                            <tr>
+                                <th class="p-2">Uploaded Document</th>
+                                <th class="p-2">Brand Document</th>
+                                <th class="p-2">Similarity Score</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.doc.moderate %}
+                            <tr class="hover:bg-yellow-300/20">
+                                <td class="p-2">{{ item.get('Uploaded Document','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Brand Document','N/A') }}</td>
+                                <td class="p-2">
+                                    {% if item.get('Similarity Score') != 'N/A' and item.get('Similarity Score') is not none %}
+                                        {{ "%.4f"|format(item.get('Similarity Score')) }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-yellow-300">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No moderate similarity matches found.</p>
+                {% endif %}
+            </div>
+
+            <div x-show="tab === 'low'" class="pt-4" x-cloak>
+                {% if results.doc.low %}
+                <div class="overflow-x-auto">
+                    <table class="min-w-full text-sm text-left border border-zinc-700">
+                        <thead class="bg-green-600 text-white">
+                            <tr>
+                                <th class="p-2">Uploaded Document</th>
+                                <th class="p-2">Brand Document</th>
+                                <th class="p-2">Similarity Score</th>
+                                <th class="p-2">Finding</th>
+                                <th class="p-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-zinc-700">
+                            {% for item in results.doc.low %}
+                            <tr class="hover:bg-green-700/30">
+                                <td class="p-2">{{ item.get('Uploaded Document','N/A') }}</td>
+                                <td class="p-2">{{ item.get('Brand Document','N/A') }}</td>
+                                <td class="p-2">
+                                    {% if item.get('Similarity Score') != 'N/A' and item.get('Similarity Score') is not none %}
+                                        {{ "%.4f"|format(item.get('Similarity Score')) }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td class="p-2 whitespace-pre-wrap">{{ item.get('Finding','') }}</td>
+                                <td class="p-2 font-semibold text-green-300">{{ item.get('Risk Level','') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-gray-400 italic mt-4">No low similarity matches found.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="report-button-container">
+            <a href="/generate_report" class="report-button">Generate Final Report 📄</a>
+        </div>
+    </div>
+</body>
+</html>
